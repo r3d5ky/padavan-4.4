@@ -4,9 +4,6 @@ name: CI
 on: 
   workflow_dispatch:
     inputs:
-      build_variant_input:
-        description: 'Build variant (mt7621, mt7621-usb-1, mt7621-usb-2)'
-        required: true
       targets_input:
         description: 'Targets to build'
         required: true
@@ -18,18 +15,8 @@ jobs:
     runs-on: ubuntu-20.04
     # if: ${{ !(github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')) }}
     env:
-      build_variant: ${{ github.event.inputs.build_variant_input }}
       targets: ${{ github.event.inputs.targets_input }}
       images_dir: /opt/images
-    # strategy:
-      # matrix:
-        # include:
-          # - build_variant: "mt7621"
-          #   targets: "WR1200JS K2P DIR-878 CR660x JCG-Q20 MI-4"
-          # - build_variant: "mt7621-usb-1"
-          #   targets: "XY-C1 JCG-836PRO JCG-Y2 NEWIFI ZTE-E8820S B70"
-          # - build_variant: "mt7621-usb-2"
-          #   targets: "MI-R3G JCG-AC860M NETGEAR-BZV MI-R3P R2100 RM2100 MSG1500 BELL-A040WQ"
     steps:
       - uses: actions/checkout@v2
       - name: Prepare environment
@@ -54,7 +41,7 @@ jobs:
         run: |
           ls -lh ${images_dir}
           GIT_VERSION=`git rev-parse --short=7 HEAD 2>/dev/null` && [ -n "$GIT_VERSION" ] && \
-          image_name=images_${build_variant}_${GIT_VERSION} || image_name=images_${build_variant}
+          image_name=images_${GIT_VERSION} || image_name=images
           cd ${images_dir}; md5sum *.trx |tee md5sum.txt; 7z a -mx=9 ${image_name}.7z ./*
           echo "image_name=${image_name}" >> $GITHUB_ENV
       - name: Upload images to Artifact
