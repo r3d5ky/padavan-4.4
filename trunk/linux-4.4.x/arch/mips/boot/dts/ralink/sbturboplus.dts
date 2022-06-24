@@ -80,37 +80,27 @@
 
 			partition@100000 {
 				label = "Factory";
-				reg = <0x100000 0x80000>; /* 512k */
+				reg = <0x100000 0x100000>; /* 1024k */
 			};
 
-			partition@180000 {
-				label = "Crash";
-				reg = <0x180000 0x80000>; /* 512k */
-			};
-			
 			partition@200000 {
-				label = "kernel_stock";
-				reg = <0x200000 0x400000>;
-			
-			};
-			partition@600000 {
 				label = "firmware";
-				reg = <0x600000 0x1400000>;
+				reg = <0x200000 0x2000000>;
 			};
 
-			partition@1a00000 {
+			partition@2200000 {
 				label = "Config";
-				reg = <0x1a00000 0x80000>; /* 512K */
+				reg = <0x2200000 0x80000>; /* 512K */
 			};
 
-			partition@1a80000 {
+			partition@2280000 {
 				label = "Storage";
-				reg = <0x1a80000 0x400000>; /* 4096K */
+				reg = <0x2280000 0x400000>; /* 4096K */
 			};
 
-			partition@1e80000 {
+			partition@2680000 {
 				label = "RWFS";
-				reg = <0x1e80000 0x6100000>;
+				reg = <0x2680000 0x5900000>;
 			};
 
 			partition@all {
